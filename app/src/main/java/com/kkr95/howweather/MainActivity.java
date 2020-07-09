@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         drawerLayout= findViewById(R.id.drawer_layout);
-        navigationView= findViewById(R.id.nav);
+        navigationView= findViewById(R.id.nav); 
 
         drawerToggle= new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.addDrawerListener(drawerToggle);
