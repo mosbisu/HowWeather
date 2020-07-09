@@ -39,6 +39,7 @@
         android:text="Use Non Account"
         android:textAllCaps="false"
         android:layout_below="@id/btn_login"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:onClick="clickNonAccount"/>
 
 </RelativeLayout>
