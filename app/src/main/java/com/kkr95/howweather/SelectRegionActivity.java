@@ -42,9 +42,6 @@ public class SelectRegionActivity extends AppCompatActivity {
     public void clickIncheon(View view){
     }
 
-    public void clickSejong(View view){
-    }
-
     public void clickGwangju(View view){
     }
 
