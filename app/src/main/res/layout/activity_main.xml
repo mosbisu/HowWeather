@@ -52,13 +52,37 @@
             android:layout_toRightOf="@id/iv_weather"
             android:padding="16dp"/>
         <TextView
-            android:id="@+id/tv_weather_hirow"
+            android:id="@+id/tv_weather_hi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="hi / row"
+            android:text="hi"
             android:textSize="30sp"
             android:layout_below="@id/iv_weather"
-            android:layout_centerHorizontal="true"/>
+            android:layout_marginLeft="150dp"/>
+        <TextView
+            android:id="@+id/tv_weather_low"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="low"
+            android:textSize="30sp"
+            android:layout_below="@id/iv_weather"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="150dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/"
+            android:textSize="30sp"
+            android:layout_toRightOf="@id/tv_weather_hi"
+            android:layout_below="@id/iv_weather"
+            android:layout_marginLeft="15dp"/>
+
+        <fragment
+            android:id="@+id/fragment"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_below="@id/tv_weather_hi"
+            android:layout_margin="16dp"/>
 
 
 
