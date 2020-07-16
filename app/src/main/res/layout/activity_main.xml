@@ -77,14 +77,12 @@
             android:layout_below="@id/iv_weather"
             android:layout_marginLeft="15dp"/>
 
-        <fragment
-            android:id="@+id/fragment"
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="280dp"
+            android:layout_height="300dp"
             android:layout_below="@id/tv_weather_hi"
-            android:layout_margin="16dp"/>
-
-
+            android:padding="16dp"
+            android:scrollbars="horizontal"/>
 
         <Button
             android:layout_width="190dp"

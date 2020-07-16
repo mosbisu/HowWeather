@@ -7,7 +7,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +28,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView tvCity, tvDate, tvTemp, tvTempHi, tvTempLow;
@@ -31,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
+    LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,52 +54,49 @@ public class MainActivity extends AppCompatActivity {
         tvTempHi= findViewById(R.id.tv_weather_hi);
         tvTempLow= findViewById(R.id.tv_weather_low);
 
-        FragmentManager fm= getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction= fm.beginTransaction();
-        fragmentTransaction.add(R.id.fragment, new DaegeonFragment());
-        fragmentTransaction.commit();
-
         initLayout();
 
-        getJsonString();
-
-        String json= "Weather.json";
-        try {
-            JSONObject jsonObject= new JSONObject(json);
-
-            String object= jsonObject.getString("object");
-            JSONArray weatherArray= new JSONArray(object);
-
-            for(int i=0; i<weatherArray.length(); i++){
-                JSONObject weatherObject= weatherArray.getJSONObject(i);
-
-                int temp_min= weatherObject.getInt("temp_min");
-                int temp_max= weatherObject.getInt("temp_max");
-                int temp= weatherObject.getInt("temp");
-                String name= weatherObject.getString("name");
-
-                tvCity.setText(name);
-                tvTemp.setText(temp);
-                tvTempHi.setText(temp_max);
-                tvTempLow.setText(temp_min);
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+        locationManager= (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
     }
 
-    void initLayout(){
-        Toolbar toolbar=(Toolbar) findViewById(R.id.toolbar);
+    void initLayout() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        drawerLayout= findViewById(R.id.drawer_layout);
-        navigationView= findViewById(R.id.nav); 
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav);
 
-        drawerToggle= new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
 
+    }
+
+    public void onLocationChanged(Location location){
+
+    }
+
+    void getWeather(double latitude, double longitude){
+        Retrofit retrofit= new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(RetrofitService.BASEURL).build();
+        RetrofitService retrofitService= retrofit.create(RetrofitService.class);
+        Call<JsonObject> call= retrofitService.getItem(RetrofitService.APIKEY, latitude, longitude);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if(response.isSuccessful()){
+                    JsonObject object= response.body();
+                    if(object != null){
+                        tvCity.setText(object.toString());
+                    }
+
+                }
+            }
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
@@ -115,25 +123,5 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickDay(View view) {
     }
-
-    String getJsonString(){
-        String json= "Weather.json";
-
-        try {
-            InputStream is= getAssets().open("Weather.json");
-            int fileSize= is.available();
-
-            byte[] buffer= new byte[fileSize];
-            is.read(buffer);
-            is.close();
-
-            json= new String(buffer, "UTF-8");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return json;
-    }
-
 
 }
