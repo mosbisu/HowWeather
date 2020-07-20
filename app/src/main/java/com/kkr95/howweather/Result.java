@@ -20,7 +20,7 @@ public class Result {
     private Integer timezoneOffset;
     @SerializedName("current")
     @Expose
-    private Current current;
+    private List<Current> current= null;
     @SerializedName("hourly")
     @Expose
     private List<Hourly> hourly = null;
@@ -60,11 +60,11 @@ public class Result {
         this.timezoneOffset = timezoneOffset;
     }
 
-    public Current getCurrent() {
+    public List<Current> getCurrent() {
         return current;
     }
 
-    public void setCurrent(Current current) {
+    public void setCurrent(List<Current> current) {
         this.current = current;
     }
 
