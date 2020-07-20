@@ -72,33 +72,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onLocationChanged(Location location){
-
-    }
-
-    void getWeather(double latitude, double longitude){
-        Retrofit retrofit= new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
-                .baseUrl(RetrofitService.BASEURL).build();
-        RetrofitService retrofitService= retrofit.create(RetrofitService.class);
-        Call<JsonObject> call= retrofitService.getItem(RetrofitService.APIKEY, latitude, longitude);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if(response.isSuccessful()){
-                    JsonObject object= response.body();
-                    if(object != null){
-                        tvCity.setText(object.toString());
-                    }
-
-                }
-            }
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-
-            }
-        });
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.action_menu, menu);
