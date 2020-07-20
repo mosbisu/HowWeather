@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 public class Temp {
     @SerializedName("day")
     @Expose
-    private Double day;
+    private int day;
     @SerializedName("min")
     @Expose
     private Double min;
@@ -23,11 +23,11 @@ public class Temp {
     @Expose
     private Double morn;
 
-    public Double getDay() {
+    public int getDay() {
         return day;
     }
 
-    public void setDay(Double day) {
+    public void setDay(int day) {
         this.day = day;
     }
 

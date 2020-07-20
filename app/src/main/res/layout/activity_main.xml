@@ -83,7 +83,8 @@
             android:layout_height="300dp"
             android:layout_below="@id/tv_weather_hi"
             android:padding="16dp"
-            android:scrollbars="horizontal"/>
+            android:scrollbars="horizontal"
+            android:background="@drawable/recycler_background"/>
 
         <Button
             android:layout_width="190dp"
