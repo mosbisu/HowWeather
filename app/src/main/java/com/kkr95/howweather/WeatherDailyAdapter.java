@@ -24,7 +24,7 @@ public class WeatherDailyAdapter extends RecyclerView.Adapter<WeatherDailyAdapte
     SimpleDateFormat dateFormat= new SimpleDateFormat("EE");
     String day= dateFormat.format(currentTime);
 
-    public WeatherDailyAdapter(List<Daily> dailies, Context context){
+    public WeatherDailyAdapter(Context context, List<Daily> dailies){
         this.dailies = dailies;
         this.context= context;
     }
@@ -42,9 +42,11 @@ public class WeatherDailyAdapter extends RecyclerView.Adapter<WeatherDailyAdapte
 
     @Override
     public void onBindViewHolder(@NonNull WeatherViewHolder weatherViewHolder, int position) {
-        Daily daily = dailies.get(position);
-        weatherViewHolder.tvDay.setText(day+"");
-        weatherViewHolder.tvDay_temp.setText(daily.getTemp().getDay());
+        if(dailies.size()!=0){
+            Daily daily = dailies.get(position);
+            weatherViewHolder.tvDay.setText(day+"");
+            weatherViewHolder.tvDay_temp.setText(daily.getTemp().getDay());
+        }
     }
 
     @Override

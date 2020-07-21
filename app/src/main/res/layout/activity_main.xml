@@ -80,9 +80,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/weather_recycler"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="290dp"
             android:layout_below="@id/tv_weather_hi"
-            android:padding="16dp"
+            android:padding="8dp"
+            android:layout_margin="8dp"
             android:scrollbars="horizontal"
             android:background="@drawable/recycler_background"/>
 
