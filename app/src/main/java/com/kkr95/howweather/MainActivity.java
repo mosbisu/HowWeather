@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
     Retrofit retrofit;
     RetrofitService retrofitService;
-    RecyclerView weather_recycler;
+
     List<Daily> dailies= new ArrayList<>();
     WeatherDailyAdapter weatherDailyAdapter;
-
-    final String BASEURL= "https://api.openweathermap.org";
-    final String APIKEY= "8a8143490a4dde9e491be8d5d214f355";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,28 +52,24 @@ public class MainActivity extends AppCompatActivity {
         tvTempHi= findViewById(R.id.tv_weather_hi);
         tvTempLow= findViewById(R.id.tv_weather_low);
 
-        weather_recycler= findViewById(R.id.weather_recycler);
-
         retrofit= new Retrofit.Builder()
-                .baseUrl(BASEURL)
+                .baseUrl(RetrofitService.BASEURL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         retrofitService= retrofit.create(RetrofitService.class);
-        retrofitService.getWeather(37, 126, "metric", APIKEY).enqueue(new Callback<Result>() {
+        retrofitService.getWeather(37, 126, "metric", RetrofitService.APIKEY).enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 if(response.isSuccessful()){
                     Log.d("retro", 1+"");
-                    Result result= response.body();
+                    Result result = response.body();
+
                     List<Daily> dailies2= result.getDaily();
                     for(Daily daily : dailies2){
                         dailies.add(daily);
                     }
-                    weatherDailyAdapter = new WeatherDailyAdapter(dailies, MainActivity.this);
-                    LinearLayoutManager linearLayoutManager= new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
-                    weather_recycler.setLayoutManager(linearLayoutManager);
-                    weather_recycler.setAdapter(weatherDailyAdapter);
+
                 }
                 else{
                     Log.d("retro", 2+"Error");
@@ -91,6 +85,19 @@ public class MainActivity extends AppCompatActivity {
 
         initLayout();
 
+        setDay();
+
+    }
+
+    void setDay(){
+        RecyclerView weather_recycler;
+        weather_recycler= findViewById(R.id.weather_recycler);
+
+        weatherDailyAdapter = new WeatherDailyAdapter(MainActivity.this, dailies);
+        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        weather_recycler.setLayoutManager(linearLayoutManager);
+        weather_recycler.setAdapter(weatherDailyAdapter);
+        weatherDailyAdapter.notifyDataSetChanged();
     }
 
     void initLayout() {
