@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
 
     List<Daily> dailies= new ArrayList<>();
     WeatherDailyAdapter weatherDailyAdapter;
+    WeatherAdapter weatherAdapter;
+    List<Hourly> hourlies= new ArrayList<>();
+    WeatherHourlyAdapter weatherHourlyAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         tvTemp= findViewById(R.id.tv_temp);
         tvTempHi= findViewById(R.id.tv_weather_hi);
         tvTempLow= findViewById(R.id.tv_weather_low);
+
 
         retrofit= new Retrofit.Builder()
                 .baseUrl(RetrofitService.BASEURL)
@@ -69,11 +72,9 @@ public class MainActivity extends AppCompatActivity {
                     for(Daily daily : dailies2){
                         dailies.add(daily);
                     }
-
                 }
                 else{
                     Log.d("retro", 2+"Error");
-
                 }
             }
 
@@ -84,9 +85,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         initLayout();
-
         setDay();
-
     }
 
     void setDay(){
@@ -100,9 +99,22 @@ public class MainActivity extends AppCompatActivity {
         weatherDailyAdapter.notifyDataSetChanged();
     }
 
+    void setTime(){
+        RecyclerView weather_recycler;
+        weather_recycler= findViewById(R.id.weather_recycler);
+
+        weatherHourlyAdapter= new WeatherHourlyAdapter(MainActivity.this, hourlies);
+        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        weather_recycler.setLayoutManager(linearLayoutManager);
+        weather_recycler.setAdapter(weatherHourlyAdapter);
+        weatherHourlyAdapter.notifyDataSetChanged();
+    }
+
     void initLayout() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav);
@@ -133,9 +145,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void clickTime(View view) {
+        setTime();
     }
 
     public void clickDay(View view) {
+        setDay();
     }
 
 }

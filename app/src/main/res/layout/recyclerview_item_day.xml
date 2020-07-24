@@ -7,7 +7,7 @@
     android:padding="8dp">
 
     <TextView
-        android:id="@+id/tv_recycler_time"
+        android:id="@+id/tv_recycler_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="월"
@@ -15,12 +15,12 @@
         android:layout_gravity="center"
         android:layout_margin="10dp"/>
     <ImageView
-        android:id="@+id/iv_recycler_time"
+        android:id="@+id/iv_recycler_day"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/sun"/>
     <TextView
-        android:id="@+id/tv_recycler_temp"
+        android:id="@+id/tv_recycler_day_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="20˚"

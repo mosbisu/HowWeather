@@ -8,124 +8,124 @@ import java.util.List;
 public class Daily {
     @SerializedName("dt")
     @Expose
-    private Integer dt;
+    private int dt;
     @SerializedName("sunrise")
     @Expose
-    private Integer sunrise;
+    private int sunrise;
     @SerializedName("sunset")
     @Expose
-    private Integer sunset;
+    private int sunset;
     @SerializedName("temp")
     @Expose
-    private Temp temp;
+    private List<Temp> temp= null;
     @SerializedName("feels_like")
     @Expose
-    private FeelsLike feelsLike;
+    private List<FeelsLike> feelsLike= null;
     @SerializedName("pressure")
     @Expose
-    private Integer pressure;
+    private int pressure;
     @SerializedName("humidity")
     @Expose
-    private Integer humidity;
+    private int humidity;
     @SerializedName("dew_point")
     @Expose
-    private Double dewPoint;
+    private double dewPoint;
     @SerializedName("wind_speed")
     @Expose
-    private Double windSpeed;
+    private double windSpeed;
     @SerializedName("wind_deg")
     @Expose
-    private Integer windDeg;
+    private int windDeg;
     @SerializedName("weather")
     @Expose
     private List<Weather__> weather = null;
     @SerializedName("clouds")
     @Expose
-    private Integer clouds;
+    private int clouds;
     @SerializedName("uvi")
     @Expose
-    private Double uvi;
+    private double uvi;
     @SerializedName("rain")
     @Expose
-    private Double rain;
+    private double rain;
 
-    public Integer getDt() {
+    public int getDt() {
         return dt;
     }
 
-    public void setDt(Integer dt) {
+    public void setDt(int dt) {
         this.dt = dt;
     }
 
-    public Integer getSunrise() {
+    public int getSunrise() {
         return sunrise;
     }
 
-    public void setSunrise(Integer sunrise) {
+    public void setSunrise(int sunrise) {
         this.sunrise = sunrise;
     }
 
-    public Integer getSunset() {
+    public int getSunset() {
         return sunset;
     }
 
-    public void setSunset(Integer sunset) {
+    public void setSunset(int sunset) {
         this.sunset = sunset;
     }
 
-    public Temp getTemp() {
+    public List<Temp> getTemp() {
         return temp;
     }
 
-    public void setTemp(Temp temp) {
+    public void setTemp(List<Temp> temp) {
         this.temp = temp;
     }
 
-    public FeelsLike getFeelsLike() {
+    public List<FeelsLike> getFeelsLike() {
         return feelsLike;
     }
 
-    public void setFeelsLike(FeelsLike feelsLike) {
+    public void setFeelsLike(List<FeelsLike> feelsLike) {
         this.feelsLike = feelsLike;
     }
 
-    public Integer getPressure() {
+    public int getPressure() {
         return pressure;
     }
 
-    public void setPressure(Integer pressure) {
+    public void setPressure(int pressure) {
         this.pressure = pressure;
     }
 
-    public Integer getHumidity() {
+    public int getHumidity() {
         return humidity;
     }
 
-    public void setHumidity(Integer humidity) {
+    public void setHumidity(int humidity) {
         this.humidity = humidity;
     }
 
-    public Double getDewPoint() {
+    public double getDewPoint() {
         return dewPoint;
     }
 
-    public void setDewPoint(Double dewPoint) {
+    public void setDewPoint(double dewPoint) {
         this.dewPoint = dewPoint;
     }
 
-    public Double getWindSpeed() {
+    public double getWindSpeed() {
         return windSpeed;
     }
 
-    public void setWindSpeed(Double windSpeed) {
+    public void setWindSpeed(double windSpeed) {
         this.windSpeed = windSpeed;
     }
 
-    public Integer getWindDeg() {
+    public int getWindDeg() {
         return windDeg;
     }
 
-    public void setWindDeg(Integer windDeg) {
+    public void setWindDeg(int windDeg) {
         this.windDeg = windDeg;
     }
 
@@ -137,27 +137,27 @@ public class Daily {
         this.weather = weather;
     }
 
-    public Integer getClouds() {
+    public int getClouds() {
         return clouds;
     }
 
-    public void setClouds(Integer clouds) {
+    public void setClouds(int clouds) {
         this.clouds = clouds;
     }
 
-    public Double getUvi() {
+    public double getUvi() {
         return uvi;
     }
 
-    public void setUvi(Double uvi) {
+    public void setUvi(double uvi) {
         this.uvi = uvi;
     }
 
-    public Double getRain() {
+    public double getRain() {
         return rain;
     }
 
-    public void setRain(Double rain) {
+    public void setRain(double rain) {
         this.rain = rain;
     }
 

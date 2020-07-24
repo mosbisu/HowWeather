@@ -6,7 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WeatherAdapter {
+public class WeatherAdapter{
 
     List<Current> currents= new ArrayList<>();
     Context context;

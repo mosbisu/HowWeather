@@ -8,16 +8,16 @@ import java.util.List;
 public class Result {
     @SerializedName("lat")
     @Expose
-    private Integer lat;
+    private int lat;
     @SerializedName("lon")
     @Expose
-    private Integer lon;
+    private int lon;
     @SerializedName("timezone")
     @Expose
     private String timezone;
     @SerializedName("timezone_offset")
     @Expose
-    private Integer timezoneOffset;
+    private int timezoneOffset;
     @SerializedName("current")
     @Expose
     private List<Current> current= null;
@@ -28,19 +28,19 @@ public class Result {
     @Expose
     private List<Daily> daily = null;
 
-    public Integer getLat() {
+    public int getLat() {
         return lat;
     }
 
-    public void setLat(Integer lat) {
+    public void setLat(int lat) {
         this.lat = lat;
     }
 
-    public Integer getLon() {
+    public int getLon() {
         return lon;
     }
 
-    public void setLon(Integer lon) {
+    public void setLon(int lon) {
         this.lon = lon;
     }
 
@@ -52,11 +52,11 @@ public class Result {
         this.timezone = timezone;
     }
 
-    public Integer getTimezoneOffset() {
+    public int getTimezoneOffset() {
         return timezoneOffset;
     }
 
-    public void setTimezoneOffset(Integer timezoneOffset) {
+    public void setTimezoneOffset(int timezoneOffset) {
         this.timezoneOffset = timezoneOffset;
     }
 
