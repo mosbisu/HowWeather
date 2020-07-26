@@ -3,12 +3,17 @@ package com.kkr95.howweather;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +34,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LocationListener{
 
     TextView tvCity, tvDate, tvTemp, tvTempHi, tvTempLow;
 
@@ -46,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     List<Hourly> hourlies= new ArrayList<>();
     WeatherHourlyAdapter weatherHourlyAdapter;
 
+    double latitude;
+    double longitude;
     LocationManager locationManager;
 
     @Override
@@ -61,36 +68,11 @@ public class MainActivity extends AppCompatActivity {
 
         locationManager= (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
 
-
-        retrofit= new Retrofit.Builder()
-                .baseUrl(RetrofitService.BASEURL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        retrofitService= retrofit.create(RetrofitService.class);
-        retrofitService.getWeather(37, 126, "metric", RetrofitService.APIKEY).enqueue(new Callback<Result>() {
-            @Override
-            public void onResponse(Call<Result> call, Response<Result> response) {
-                if(response.isSuccessful()){
-                    Log.d("retro", 1+"");
-                    Result result = response.body();
-
-                    List<Daily> dailies2= result.getDaily();
-                    for(Daily daily : dailies2){
-                        dailies.add(daily);
-                    }
-                }
-                else{
-                    Log.d("retro", 2+"Error");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Result> call, Throwable t) {
-
-            }
-        });
-
+        initLayout();
+        setDay();
+        requestLocation();
+    }
+    void getWeather(double latitude, double longitude){
         Retrofit retrofit= new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(RetrofitService.BASEURL).build();
         RetrofitService retrofitService= retrofit.create(RetrofitService.class);
@@ -101,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     JsonObject object= response.body();
                     if(object != null){
-                        tvTemp.setText(object.toString());
+                        tvCity.setText(object.toString());
                     }
                 }
             }
@@ -111,13 +93,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
-        initLayout();
-        setDay();
     }
 
     void requestLocation(){
-        
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+            && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+        }else{
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 500, 1, (LocationListener) this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 1, (LocationListener) this);
+        }
     }
 
     void setDay(){
@@ -183,4 +168,27 @@ public class MainActivity extends AppCompatActivity {
         setDay();
     }
 
+    @Override
+    public void onLocationChanged(Location location) {
+        latitude= location.getLatitude();
+        longitude= location.getLongitude();
+
+        getWeather(latitude, longitude);
+        locationManager.removeUpdates(MainActivity.this);
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
 }
