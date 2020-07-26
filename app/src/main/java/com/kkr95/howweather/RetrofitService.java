@@ -19,4 +19,11 @@ public interface RetrofitService {
             @Query("units") String units,
             @Query("appid") String appid);
 
+    @GET("data/2.5/onecall?")
+    Call<JsonObject> getWeather2(
+            @Query("lat") int lat,
+            @Query("lon") int lon,
+            @Query("units") String units,
+            @Query("appid") String appid);
+
 }

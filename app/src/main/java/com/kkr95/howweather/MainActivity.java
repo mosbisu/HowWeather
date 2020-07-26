@@ -7,7 +7,9 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     List<Hourly> hourlies= new ArrayList<>();
     WeatherHourlyAdapter weatherHourlyAdapter;
 
+    LocationManager locationManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         tvTemp= findViewById(R.id.tv_temp);
         tvTempHi= findViewById(R.id.tv_weather_hi);
         tvTempLow= findViewById(R.id.tv_weather_low);
+
+        locationManager= (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
 
 
         retrofit= new Retrofit.Builder()
@@ -84,8 +91,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Retrofit retrofit= new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(RetrofitService.BASEURL).build();
+        RetrofitService retrofitService= retrofit.create(RetrofitService.class);
+        Call<JsonObject> call= retrofitService.getWeather2(37, 126, "metric", RetrofitService.APIKEY);
+        call.enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                if(response.isSuccessful()){
+                    JsonObject object= response.body();
+                    if(object != null){
+                        tvTemp.setText(object.toString());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+
+            }
+        });
+
         initLayout();
         setDay();
+    }
+
+    void requestLocation(){
+        
     }
 
     void setDay(){
@@ -122,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
-
     }
 
     @Override
