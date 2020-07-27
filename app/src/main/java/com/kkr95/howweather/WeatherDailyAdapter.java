@@ -19,14 +19,11 @@ import java.util.List;
 
 public class WeatherDailyAdapter extends RecyclerView.Adapter<WeatherDailyAdapter.DailyViewHolder> {
     List<Daily> dailies= new ArrayList<>();
+    List<Temp> temps= new ArrayList<>();
     Context context;
 
-    Date currentTime= Calendar.getInstance().getTime();
-    SimpleDateFormat dateFormat= new SimpleDateFormat("EE");
-    String day= dateFormat.format(currentTime);
-
-    public WeatherDailyAdapter(Context context, List<Daily> dailies){
-        this.dailies = dailies;
+    public WeatherDailyAdapter(Context context, List<Temp> temps){
+        this.temps = temps;
         this.context= context;
     }
 
@@ -44,13 +41,20 @@ public class WeatherDailyAdapter extends RecyclerView.Adapter<WeatherDailyAdapte
     @Override
     public void onBindViewHolder(@NonNull DailyViewHolder dailyViewHolder, int position) {
 
-
-        if(dailies.size()!=0){
-            Daily daily = dailies.get(position);
-            dailyViewHolder.tvDay.setText(day+"");
-            dailyViewHolder.tvDay_temp.setText("");
+        if(temps.size()!=0){
+            Temp temp= temps.get(position);
+            for(int i=1; i<8; i++){
+                Date today= new Date();
+                Date week= new Date(today.getTime()+(long)(1000*60*60*24*i));
+                dailyViewHolder.tvDay.setText(week+"");
+            }
+            dailyViewHolder.tvDay_temp.setText(temp.getDay());
+            dailyViewHolder.tvDay.setText("za");
+        }else{
+            dailyViewHolder.tvDay.setText("aa");
+            dailyViewHolder.tvDay_temp.setText("11");
         }
-        else dailyViewHolder.tvDay.setText(day);
+
     }
 
     @Override

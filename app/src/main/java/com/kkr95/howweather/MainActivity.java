@@ -20,13 +20,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.JsonObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,18 +38,16 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity implements LocationListener{
+public class MainActivity extends AppCompatActivity implements LocationListener, View.OnClickListener {
 
     TextView tvCity, tvDate, tvTemp, tvTempHi, tvTempLow;
+    ImageView ivLocation;
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     ActionBarDrawerToggle drawerToggle;
 
-    Retrofit retrofit;
-    RetrofitService retrofitService;
-
-    List<Daily> dailies= new ArrayList<>();
+    List<Temp> temps= new ArrayList<>();
     WeatherDailyAdapter weatherDailyAdapter;
     WeatherAdapter weatherAdapter;
     List<Hourly> hourlies= new ArrayList<>();
@@ -65,18 +67,20 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
         tvTemp= findViewById(R.id.tv_temp);
         tvTempHi= findViewById(R.id.tv_weather_hi);
         tvTempLow= findViewById(R.id.tv_weather_low);
+        ivLocation= findViewById(R.id.iv_location);
+        ivLocation.setOnClickListener(this);
 
         locationManager= (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
 
         initLayout();
         setDay();
-        requestLocation();
+        setDate();
     }
     void getWeather(double latitude, double longitude){
         Retrofit retrofit= new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create())
                 .baseUrl(RetrofitService.BASEURL).build();
         RetrofitService retrofitService= retrofit.create(RetrofitService.class);
-        Call<JsonObject> call= retrofitService.getWeather2(37, 126, "metric", RetrofitService.APIKEY);
+        Call<JsonObject> call= retrofitService.getWeather(latitude, longitude, "metric", RetrofitService.APIKEY);
         call.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -109,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
         RecyclerView weather_recycler;
         weather_recycler= findViewById(R.id.weather_recycler);
 
-        weatherDailyAdapter = new WeatherDailyAdapter(MainActivity.this, dailies);
+        weatherDailyAdapter = new WeatherDailyAdapter(MainActivity.this, temps);
         LinearLayoutManager linearLayoutManager= new LinearLayoutManager(MainActivity.this, LinearLayoutManager.HORIZONTAL, false);
         weather_recycler.setLayoutManager(linearLayoutManager);
         weather_recycler.setAdapter(weatherDailyAdapter);
@@ -139,6 +143,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
+    }
+
+    void setDate(){
+        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("MM. dd EE");
+        Date currentTime= new Date();
+        String dTime= simpleDateFormat.format(currentTime);
+        tvDate.setText(dTime);
     }
 
     @Override
@@ -190,5 +201,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener{
     @Override
     public void onProviderDisabled(String provider) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.iv_location:
+                if(locationManager != null){
+                    requestLocation();
+                }
+                break;
+        }
     }
 }

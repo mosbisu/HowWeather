@@ -6,22 +6,22 @@ import com.google.gson.annotations.SerializedName;
 public class Temp {
     @SerializedName("day")
     @Expose
-    private int day;
+    int day;
     @SerializedName("min")
     @Expose
-    private double min;
+    double min;
     @SerializedName("max")
     @Expose
-    private double max;
+    double max;
     @SerializedName("night")
     @Expose
-    private double night;
+    double night;
     @SerializedName("eve")
     @Expose
-    private double eve;
+    double eve;
     @SerializedName("morn")
     @Expose
-    private double morn;
+    double morn;
 
     public int getDay() {
         return day;
