@@ -6,22 +6,22 @@ import com.google.gson.annotations.SerializedName;
 public class Temp {
     @SerializedName("day")
     @Expose
-    private int day;
+    int day;
     @SerializedName("min")
     @Expose
-    private Double min;
+    double min;
     @SerializedName("max")
     @Expose
-    private Double max;
+    double max;
     @SerializedName("night")
     @Expose
-    private Double night;
+    double night;
     @SerializedName("eve")
     @Expose
-    private Double eve;
+    double eve;
     @SerializedName("morn")
     @Expose
-    private Double morn;
+    double morn;
 
     public int getDay() {
         return day;
@@ -31,43 +31,43 @@ public class Temp {
         this.day = day;
     }
 
-    public Double getMin() {
+    public double getMin() {
         return min;
     }
 
-    public void setMin(Double min) {
+    public void setMin(double min) {
         this.min = min;
     }
 
-    public Double getMax() {
+    public double getMax() {
         return max;
     }
 
-    public void setMax(Double max) {
+    public void setMax(double max) {
         this.max = max;
     }
 
-    public Double getNight() {
+    public double getNight() {
         return night;
     }
 
-    public void setNight(Double night) {
+    public void setNight(double night) {
         this.night = night;
     }
 
-    public Double getEve() {
+    public double getEve() {
         return eve;
     }
 
-    public void setEve(Double eve) {
+    public void setEve(double eve) {
         this.eve = eve;
     }
 
-    public Double getMorn() {
+    public double getMorn() {
         return morn;
     }
 
-    public void setMorn(Double morn) {
+    public void setMorn(double morn) {
         this.morn = morn;
     }
 }

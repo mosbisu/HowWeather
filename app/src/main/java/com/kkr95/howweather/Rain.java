@@ -6,13 +6,13 @@ import com.google.gson.annotations.SerializedName;
 public class Rain {
     @SerializedName("1h")
     @Expose
-    private Double _1h;
+    private double _1h;
 
-    public Double get1h() {
+    public double get1h() {
         return _1h;
     }
 
-    public void set1h(Double _1h) {
+    public void set1h(double _1h) {
         this._1h = _1h;
     }
 }
