@@ -7,22 +7,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 public class SelectRegionActivity extends AppCompatActivity{
 
-    TextView tvCity, tvDate, tvTemp, tvTempHi, tvTempLow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_region);
 
-        tvCity= findViewById(R.id.tv_city);
-        tvDate= findViewById(R.id.tv_date);
-        tvTemp= findViewById(R.id.tv_temp);
-        tvTempHi= findViewById(R.id.tv_weather_hi);
-        tvTempLow= findViewById(R.id.tv_weather_low);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.select_region_toolbar);
         setSupportActionBar(toolbar);
