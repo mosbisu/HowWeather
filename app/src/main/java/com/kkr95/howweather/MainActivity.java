@@ -98,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter= new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(TodayWeatherFragment.getInstance(), "Today");
-        adapter.addFragment(ForecastFragment.getInstance(), "5 DAYS");
-        adapter.addFragment(CityFragment.getInstance(), "Cities");
+        adapter.addFragment(TodayWeatherFragment.getInstance(), "현재날씨");
+        adapter.addFragment(ForecastFragment.getInstance(), "시간별 날씨");
+        adapter.addFragment(CityFragment.getInstance(), "도시검색");
         viewPager.setAdapter(adapter);
     }
 

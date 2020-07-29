@@ -43,7 +43,6 @@ public class ForecastFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View itemView= inflater.inflate(R.layout.fragment_forecast, container, false);
         
         txt_city_name= (TextView)itemView.findViewById(R.id.txt_city_name);

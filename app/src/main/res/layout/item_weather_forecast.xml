@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/txt_date"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             android:text="Wednesday"
@@ -51,7 +51,7 @@
             android:id="@+id/txt_description"
             android:textColor="@color/colorPrimary"
             android:textSize="18sp"
-            android:text="Wednesday"
+            android:text="Cloudy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
