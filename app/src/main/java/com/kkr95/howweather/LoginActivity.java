@@ -1,5 +1,6 @@
 package com.kkr95.howweather;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -44,14 +45,14 @@ public class LoginActivity extends AppCompatActivity {
     ISessionCallback sessionCallback= new ISessionCallback() {
         @Override
         public void onSessionOpened() {
-
+            Log.i("KAKAO_SESSION", "로그인 성공");
             requestUserInfo();
 
         }
 
         @Override
         public void onSessionOpenFailed(KakaoException exception) {
-
+            Log.e("KAKAO_SESSION", "로그인 실패", exception);
         }
     };
 
@@ -78,6 +79,17 @@ public class LoginActivity extends AppCompatActivity {
 
         Session.getCurrentSession().removeCallback(sessionCallback);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        // 카카오톡|스토리 간편로그인 실행 결과를 받아서 SDK로 전달
+        if (Session.getCurrentSession().handleActivityResult(requestCode, resultCode, data)) {
+            return;
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     public static String getKeyHash(final Context context) {

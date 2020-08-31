@@ -51,7 +51,7 @@ public class ForecastFragment extends Fragment {
         
         recycler_forecast= (RecyclerView)itemView.findViewById(R.id.recycler_forecast);
         recycler_forecast.setHasFixedSize(true);
-        recycler_forecast.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        recycler_forecast.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         
         getForecastWeatherInformation();
         return itemView;

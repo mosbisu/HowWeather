@@ -4,6 +4,7 @@ import android.location.Location;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Common {
     public static final String APP_ID= "8a8143490a4dde9e491be8d5d214f355";
@@ -11,14 +12,14 @@ public class Common {
 
     public static String convertUnixToDate(long dt) {
         Date date= new Date(dt*1000L);
-        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("MM. dd EE");
+        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("MM. dd EE  HH:mm", Locale.KOREA);
         String formatted= simpleDateFormat.format(date);
         return formatted;
     }
 
     public static String convertUnixToHour(long dt) {
         Date date= new Date(dt*1000L);
-        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("HH:mm");
+        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("HH : mm", Locale.KOREA);
         String formatted= simpleDateFormat.format(date);
         return formatted;
     }
