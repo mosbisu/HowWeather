@@ -172,7 +172,8 @@ public class CityFragment extends Fragment {
     private void getWeatherInformation(String cityName) {
         compositeDisposable.add(mService.getWeatherByCityName(cityName,
                 Common.APP_ID,
-                "metric")
+                "metric",
+                "kr")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<WeatherResult>() {
