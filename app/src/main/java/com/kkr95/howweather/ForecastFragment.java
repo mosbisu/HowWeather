@@ -51,7 +51,7 @@ public class ForecastFragment extends Fragment {
         
         recycler_forecast= (RecyclerView)itemView.findViewById(R.id.recycler_forecast);
         recycler_forecast.setHasFixedSize(true);
-        recycler_forecast.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        recycler_forecast.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         
         getForecastWeatherInformation();
         return itemView;
@@ -74,7 +74,8 @@ public class ForecastFragment extends Fragment {
                 String.valueOf(Common.current_location.getLatitude()),
                 String.valueOf(Common.current_location.getLongitude()),
                 Common.APP_ID,
-                "metric")
+                "metric",
+                "kr")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<WeatherForecastResult>() {
