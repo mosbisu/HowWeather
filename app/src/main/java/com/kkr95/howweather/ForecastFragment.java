@@ -50,7 +50,6 @@ public class ForecastFragment extends Fragment {
         txt_geo_coord= (TextView)itemView.findViewById(R.id.txt_geo_coord);
         
         recycler_forecast= (RecyclerView)itemView.findViewById(R.id.recycler_forecast);
-        recycler_forecast.setHasFixedSize(true);
         recycler_forecast.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         
         getForecastWeatherInformation();
