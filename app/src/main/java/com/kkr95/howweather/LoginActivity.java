@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
@@ -45,14 +46,19 @@ public class LoginActivity extends AppCompatActivity {
     ISessionCallback sessionCallback= new ISessionCallback() {
         @Override
         public void onSessionOpened() {
-            Log.i("KAKAO_SESSION", "로그인 성공");
+            Toast.makeText(LoginActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();
             requestUserInfo();
+
+            Intent intent= new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+
+            finish();
 
         }
 
         @Override
         public void onSessionOpenFailed(KakaoException exception) {
-            Log.e("KAKAO_SESSION", "로그인 실패", exception);
+            Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
         }
     };
 
